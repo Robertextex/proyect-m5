@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import SignUpForm, AddRecordForm
 from .models import Record
+from rest_framework import viewsets
+from .serializer import RecordSerializer
 
 
 def home(request):
@@ -99,3 +101,8 @@ def update_record(request, pk):
 	else:
 		messages.success(request, "You Must Be Logged In...")
 		return redirect('home')
+ 
+
+class RecordViewSet(viewsets.ModelViewSet):
+	queryset= Record.objects.all()
+	serializer_class=RecordSerializer
